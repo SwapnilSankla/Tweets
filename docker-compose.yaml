@@ -1,0 +1,27 @@
+version: "2.4"
+services:
+ mongo-service:
+  image: mongo
+  container_name: mongo
+  mem_limit: 500m
+  ports:
+   - "27017:27017"
+
+ admin-mongo-service:
+  image: mrvautin/adminmongo
+  container_name: adminmongo
+  mem_limit: 500m
+  links: ['mongo-service:mongo']
+  environment:
+   CONN_NAME: 'localConnection'
+   DB_HOST: 'mongo'
+   HOST: 0.0.0.0
+  ports:
+   - "1234:1234"
+
+ tweets-service:
+  image: com.swapnil/tweets
+  container_name: tweets
+  mem_limit: 500m
+  ports:
+   - "8080:8080"
